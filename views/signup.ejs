@@ -1,0 +1,173 @@
+	
+<!DOCTYPE html>
+
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+  
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">  
+  
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- <link rel="stylesheet" href="./stylesheets/acumen.css">
+    <link rel="stylesheet" href="./stylesheets/bootstrap.min.css"> -->
+    <title>MTAAS</title>
+
+    <!-- Bootstrap core CSS -->
+
+
+    <!-- Custom styles for this template -->
+    <!--<link href="./files/acumen.css" rel="stylesheet">-->
+ </head>
+
+  <body>
+  
+			<div ng-app="MtaaS" data-ng-controller="MtaaS">
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+  
+    </nav>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron" method="post">
+      <div class="container">
+        <h2>Tester Registration</h2>
+        
+        <!--new COde added here -->
+         <form class="myForm" style="background-color:red">
+         <div class="form-group col-md-10">
+             
+         <div class="well">
+         <legend>Register as a Tester</legend>
+            <div class="form-group ">
+              <input type="text" placeholder="Enter Full Name" class="form-control" name="name" ng-model = "name">
+            </div>
+            <div class="form-group">
+              <input type="text" placeholder="Email Address" class="form-control" name="email" ng-model="email">
+            </div>
+            <div class="form-group">
+              <input type="text" placeholder="Phone" class="form-control" name="phone" ng-model = "phone">
+            </div>
+            <div class="form-group">
+            Select the highest Qualification:                                
+            </div>
+            <div class="form-group">
+					<Select class="form-control" placeholder="Qualification" type="select" name="qualification" ng-model="qualification">
+					<option value="High School">High School</option>
+					<option value="Graduate">Graduate</option>
+					<option value="Bachelor">Bachelor</option>
+					<option value="Others">Others</option>
+					</select>
+             </div>
+            <div class="form-group">
+            Select the most relevant Skill:                                
+            </div>                                          
+            <div class="form-group">
+					<Select class="form-control" placeholder="Select most relevant Skill" type="select" name="skills" ng-model="skills">
+					<option value="Automation">Automation</option>
+					<option value="Functional">Functional</option>
+					<option value="Load Balancing">Load Balancing</option>
+                    <option value="Security">Security</option>
+					<option value="Others">Others</option>
+					</select>
+             </div>
+            <div class="form-group">
+            Select the mobile OS:                                
+            </div>                                          
+            <div class="form-group">
+					<Select class="form-control" placeholder="Select your mobiles OS" type="select" name="mobileos" ng-model="mobileos">
+					<option value="Android">Android</option>
+					<option value="Apple iOS">Apple iOS</option>
+					<option value="Blackberry OS">Blackberry OS</option>
+					<option value="Others">Others</option>
+					</select>
+             </div>     
+            <div class="form-group">
+            Select the most relevant Expertise:                                
+            </div>                                          
+            <div class="form-group">
+					<Select class="form-control" placeholder="Select Expertise" type="select" name="expertise" ng-model="expretise">
+					<option value="Test Case Execution">Test Case Execution</option>
+					<option value="Test Case Writing">Test Case Writing</option>
+					<option value="API Testing">API Testing</option>
+					<option value="Others">Others</option>
+					</select>
+             </div>                      
+            <div class="clearfix">
+          
+			</div>
+			<!-- Supplier Contact Information -->
+			<p>Tester Login Credentials</p>
+            <div class="form-group">
+              <input type="text" placeholder="Choose the User Name of your choice" class="form-control" name="phone" ng-model = "username">
+            </div>
+            <div class="form-group">
+              <input type="password" placeholder="Enter a Secure Password" class="form-control" name="password" ng-model = "password">
+            </div>
+            <div class="checkbox">
+                 <label>
+                   <input id="terms" name="terms" type="checkbox"> 
+                   I have read, consent and agree to Company's User Agreement and Privacy Policy
+                   , and I am of legal age to register as a tester.
+                 </label>
+               </div>
+            	       <input type="submit" ng-click="signup()"/>                                                                                                              
+           <!-- <input type="submit" class="btn btn-success" ng-click="signup()" role="button">Sign up as a Tester</input> -->
+         </div>
+                                                                                      
+         </div>
+         </form>
+         <!--new code ends-->
+      </div>
+    </div>
+                               <hr>
+
+            
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster 
+    <script src="files/jquery.min.js"></script>
+    <script src="files/bootstrap.min.js"> -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <script type ='text/javascript'>	//javascript code
+var app=angular.module('MtaaS', [])
+ app.controller('MtaaS', ['$scope', '$http', '$window', function ( $scope,$http,$window)
+ {
+
+	
+	$scope.signup = function (){
+				var in_name = $scope.name;
+				var in_email = $scope.email;
+				var in_phone = $scope.phone;
+				var in_qualification = $scope.qualification;
+				var in_skills=$scope.skills;
+				var in_mobileos=$scope.mobileos;
+				var in_expretise= $scope.expretise;
+                var in_username= $scope.username;
+				var in_password = $scope.password;
+
+	
+	$http({
+			  method: 'POST',
+			  url: '/signup',
+			  data: {"name":in_name,"email": in_email,"phone":in_phone,"qualification":in_qualification,"skills":in_skills,"mobileos":in_mobileos,"expretise":in_expretise,"username":in_username,"password":in_password}
+			}).
+			  then(function(response) {
+
+				  $window.location.href = '/login';
+			  });
+}
+ 
+ 
+ }]);
+	
+</script>
+	
+  
+
+</body></html>

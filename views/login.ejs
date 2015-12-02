@@ -1,0 +1,223 @@
+	
+<!DOCTYPE html>
+
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+  
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+  
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">  
+  
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- <link rel="stylesheet" href="./stylesheets/acumen.css">
+    <link rel="stylesheet" href="./stylesheets/bootstrap.min.css"> -->
+    <title>MTAAS</title>
+
+    <!-- Bootstrap core CSS -->
+
+
+    <!-- Custom styles for this template -->
+    <!--<link href="./files/acumen.css" rel="stylesheet">-->
+    
+    <style>
+            .btn-file {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-file input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            font-size: 100px;
+            text-align: right;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            outline: none;
+            background: white;
+            cursor: inherit;
+            display: block;
+        }
+    </style>
+ </head>
+
+  <body>
+  
+			<div ng-app="MtaaS" data-ng-controller="MtaaS">
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+  
+    </nav>
+
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+        <h2>Mobile Testing as a Service</h2>
+        <p>Please use the below Form for Login and Register:</p>
+        <!--new COde added here -->
+         <form class="login" style="background-color:red">
+         <div class="col-md-5 col-sm-5">
+         <div class="well">
+         <legend>LOGIN</legend>
+         <div class="form-group">
+              <input type="text" placeholder="User ID" class="form-control" ng-model = "name">
+            </div>
+            <div class="form-group">
+              <input type="password" placeholder="Password" class="form-control" ng-model = "password">
+            </div>
+            <a type="submit" class="btn btn-success" ng-click="signin()" role="button">Login as Tester</a>
+            <a type="submit" class="btn btn-success" ng-click="signinmanager()" role="button">Login as Manager</a>
+         </div>
+         </div>
+         </form>
+         <form class="register">
+         <div class="col-md-7 col-sm-7">
+         <div class="well">
+         <legend>NOT YET REGISTERED WITH US?DO IT NOW!</legend>
+         <div class="form-group">
+              <input class ="btn btn-success btn-block" type="submit" ng-click="register()" value = "REGISTER AS A TESTER">
+            </div>
+            <div class="form-group">
+              <input class ="btn btn-success btn-block" type="submit" ng-click="appmanagerregister()" value = "REGISTER AS AN APPLICATION MANAGER">
+            </div>
+           </div>
+         </div>
+         </form>
+       <!--new code ends-->
+      </div>
+    </div>
+                               <hr>
+
+            
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster 
+    <script src="files/jquery.min.js"></script>
+    <script src="files/bootstrap.min.js"> -->
+    
+    <script >
+    var app=angular.module('MtaaS', [])
+ app.controller('MtaaS', ['$scope', '$http', '$window', function( $scope,$http,$window)
+ {
+   
+ $http({
+ method: 'GET',
+ url: '/checklogin'
+ }).
+ then(function(response)
+ {
+ 	if(response.data.status===200)
+ 	{
+ 	$window.location.href='/home';
+ 	}
+
+ });
+ 
+$scope.signin = function (){
+				//alert($scope.name);
+				//alert($scope.password);
+				var in_name = $scope.name;
+				var in_password=$scope.password;
+				//var in_type=$scope.type;
+				 
+	if (in_name == null || in_name == "")			 
+	{
+		alert("Username cannot be empty!!");
+		return;
+	}
+	
+	if (in_password == null || in_password == "")
+	{
+		alert("password cannot be empty!!");
+		return;
+	}
+	
+				$http({
+			      	  method: 'POST',
+			      	  url: '/signin',
+			      	  data: {"name":in_name,"password":in_password}
+			        }).
+			          then(function(response) {
+			          if(response.data.status == 100)
+			          {
+			          	alert("Invalid User and Password!");
+			          }
+			          else
+			          {
+			        	  $window.location.href = '/home';
+			          }
+			          }); 
+
+}     
+
+
+
+//Sign In Tester
+$scope.signinmanager = function (){
+				//alert($scope.name);
+				//alert($scope.password);
+				var in_name = $scope.name;
+				var in_password=$scope.password;
+				//var in_type=$scope.type;
+				 
+	if (in_name == null || in_name == "")			 
+	{
+		alert("Username cannot be empty!!");
+		return;
+	}
+	
+	if (in_password == null || in_password == "")
+	{
+		alert("password cannot be empty!!");
+		return;
+	}
+	
+				$http({
+			      	  method: 'POST',
+			      	  url: '/signinmanager',
+			      	  data: {"name":in_name,"password":in_password}
+			        }).
+			          then(function(response) {
+			          if(response.data.status == 100)
+			          {
+			          	alert("Invalid User and Password!");
+			          }
+			          else
+			          {
+			        	  $window.location.href = '/managerhome';
+			          }
+			          }); 
+
+}  
+
+//Load User Registeration Page
+			 
+		$scope.register = function ()
+		{
+	   $window.location.href = '/register';
+		}
+        
+//Load Application Manager Registration Page
+        	$scope.appmanagerregister = function ()
+		{
+	   $window.location.href = '/appmanagerregister';
+		}
+	
+
+  }]);   
+    
+    
+    </script>
+    
+  
+
+</body></html>
